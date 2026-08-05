@@ -1,8 +1,9 @@
 import numpy as np
+from bbox import BBox
 
 
+class ADC(BBox):
 
-class ADC():
     def __init__(self, Vref : float, differential : bool = True, bit_width : int = 24):
         """
             ## ADC Converter
@@ -20,32 +21,33 @@ class ADC():
                 Number of Bits
 
         """
+        super().__init__("adc")
 
         self.Vref = Vref
         self.bitw = bit_width
         self.diff = differential
 
+        self.last = 0.0
+
         if (differential):
             sstep = Vref / ((2**(bit_width-1))-1)
-            print(sstep, (2*Vref) / sstep)
-            # posh = np.ara(0, Vref, 2**(bit_width-1))
-            # negh = np.linspace(-Vref, 0, 2**(bit_width-1),)
 
             posh = np.arange(0, Vref + sstep, sstep)
             negh = np.arange(-(Vref + sstep), 0, sstep)
 
             self._steps = np.append(negh, posh)
 
-        print(self._steps)
+        else:
 
-        # print(self._steps)
+            self._steps = np.linspace(0, Vref, 2**bit_width)
+
 
 
     def getSteps(self) -> np.array:
         return self._steps
 
 
-    def convert(self, signal : float):
+    def convert(self, signal : float) -> float:
 
         # Clip the voltage to the valid range
         if self.diff:
@@ -54,11 +56,25 @@ class ADC():
         else:
             signal = np.clip(signal, 0, self.Vref)
 
-        print(self._steps - signal)
         id = np.argmin(np.abs(self._steps - signal))
+        self.last = self._steps[id]
 
         return self._steps[id]
+    
 
+    def getValue(self) -> float:
+        """
+            Returns the Value of the last Conversion
+
+            Return
+            -------
+            float - Last Conversion Value
+        """
+        return self.last
+
+
+    def update(self):
+        self.convert(self.sig_in.value)
 
 
 
