@@ -1,5 +1,6 @@
 import numpy as np
-from bbox import BBox
+from pyCAP.core.bbox import BBox
+from pyCAP.core.timing import TimeValue
 
 
 class ADC(BBox):
@@ -42,7 +43,6 @@ class ADC(BBox):
             self._steps = np.linspace(0, Vref, 2**bit_width)
 
 
-
     def getSteps(self) -> np.array:
         return self._steps
 
@@ -73,8 +73,9 @@ class ADC(BBox):
         return self.last
 
 
-    def update(self):
-        self.convert(self.sig_in.value)
+    def update(self, t : TimeValue):
+        self.sig_out.value = self.convert(self.sig_in.value)
+        #print(self.sig_out.value)
 
 
 

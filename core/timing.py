@@ -55,3 +55,25 @@ class TimeValue:
             Get Time Object from Microseconds
         """
         return cls(int(micros*1e3))
+
+
+
+def TSeconds(seconds : float) -> TimeValue:
+    """
+        Get Time Object from Seconds
+    """
+    return TimeValue.fromSeconds(seconds)
+
+
+def TMillis(millis : float) -> TimeValue:
+    """
+        Get Time Object from Milliseconds
+    """
+    return TimeValue.fromMillis(millis)
+
+
+def TMicros(micros : float) -> TimeValue:
+    """
+        Get Time Object from Microseconds
+    """
+    return TimeValue.fromMicros(micros)
