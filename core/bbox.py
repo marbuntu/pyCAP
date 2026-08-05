@@ -105,7 +105,7 @@ class BBox(ABC):
     #     }
 
 
-    def setupSim(self, period : TimeValue, initial_delay : TimeValue = TimeValue(0.0)):
+    def every(self, period : TimeValue, initial_delay : TimeValue = TimeValue(0.0)):
         """
             Set Simulation Event Timing
         """

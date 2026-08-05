@@ -1,7 +1,6 @@
 
 from pyCAP.core.bbox import BBox
 from pyCAP.core.timing import TimeValue
-from pyCAP.core.signals import SignalPort
 from pyCAP.algo.signalsources import SignalSource
 
 
