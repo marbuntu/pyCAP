@@ -1,7 +1,9 @@
 
 from pyCAP.core.bbox import BBox
 from pyCAP.core.timing import TimeValue
+from pyCAP.core.signals import SignalPort
 from pyCAP.algo.signalsources import SignalSource
+
 
 
 class SignalGenerator(BBox):
@@ -9,6 +11,8 @@ class SignalGenerator(BBox):
     def __init__(self):
         super().__init__("generator")
         self.sources = []
+        self.out = self._add_output("Aout", 0.0)
+
 
     def add_source(self, source : SignalSource):
         if source is None:
@@ -24,7 +28,10 @@ class SignalGenerator(BBox):
         self.sources.append(source)
 
         return self
-        
+
+    # @property
+    # def Dout(self) -> SignalPort:
+    #     return self.out
 
 
     def update(self, t : TimeValue):
@@ -32,7 +39,7 @@ class SignalGenerator(BBox):
         for src in self.sources:
             tmp += src(t)
 
-        self.sig_out.value = tmp
+        self.out.value = tmp
 
 
 

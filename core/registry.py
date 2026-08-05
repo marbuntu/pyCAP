@@ -2,10 +2,11 @@ from collections import defaultdict
 import weakref
 import fnmatch
 
-from pyCAP.core.bbox import BBox
-
 
 class SimRegistry:
+    """
+        ## Simulation Registry for Objects and Signals
+    """
 
     def __init__(self):
         self._objects = {}
@@ -42,13 +43,14 @@ class SimRegistry:
         name = self._register_obj(obj, name)
         print(name)
 
-        if hasattr(obj, "signals"):
+        if hasattr(obj, "ports"):
+            for ptype, ports in obj.ports().items():
+                for pname, port in ports.items():
+                    self.register(
+                        port,
+                        f"{name}.{ptype}.{pname}"
+                    )
 
-            for signal_name, signal in obj.signals().items():
-                self.register(
-                    signal,
-                    f"{name}.{signal_name}"
-                )
 
         return name
 

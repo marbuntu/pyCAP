@@ -30,29 +30,6 @@ class SignalPort(Generic[T], ABC):
         self.name = name
 
 
-class InputPort(SignalPort[T]):
-
-    def __init__(self, name : str):
-        super().__init__(name)
-        self._signal : Signal[T] | None = None
-
-    @property
-    def signal(self) -> Signal[T]:
-        if self._signal is None:
-            raise RuntimeError(
-                f"Input '{self.name}' is not connected."
-            )
-        return self._signal
-
-    @property
-    def value(self) -> T:
-        return self.signal.value
-
-    def connect(self, signal: Signal[T]) -> None:
-        self._signal = signal
-
-
-
 class OutputPort(SignalPort[T]):
 
     def __init__(self, name: str, initial: T):
@@ -70,3 +47,48 @@ class OutputPort(SignalPort[T]):
     @value.setter
     def value(self, value: T):
         self._signal.value = value
+
+
+class DebugPort(SignalPort[T]):
+
+    def __init__(self, name : str, initial: T):
+        super().__init__(name)
+        self._signal = Signal(name, initial)
+
+
+    @property
+    def value(self) -> T:
+        return self._signal.value
+
+
+class InputPort(SignalPort[T]):
+
+    def __init__(self, name : str):
+        super().__init__(name)
+        self._signal : Signal[T] | None = None
+
+
+    @property
+    def signal(self) -> Signal[T]:
+        if self._signal is None:
+            raise RuntimeError(
+                f"Input '{self.name}' is not connected."
+            )
+        return self._signal
+
+
+    @property
+    def value(self) -> T:
+        return self.signal.value
+
+
+    def connect(self, signal: OutputPort[T]) -> None:
+        if not isinstance(signal, OutputPort):
+            raise TypeError(
+                "Input can only be connected to Type 'OutputPort'"
+            )
+        
+        self._signal = signal
+
+
+

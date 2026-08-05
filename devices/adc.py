@@ -1,6 +1,7 @@
 import numpy as np
 from pyCAP.core.bbox import BBox
 from pyCAP.core.timing import TimeValue
+from pyCAP.core.signals import SignalPort
 
 
 class ADC(BBox):
@@ -23,6 +24,8 @@ class ADC(BBox):
 
         """
         super().__init__("adc")
+        self.ain = self._add_input("Ain")
+        self.dout = self._add_output("Dout")
 
         self.Vref = Vref
         self.bitw = bit_width
@@ -72,9 +75,12 @@ class ADC(BBox):
         """
         return self.last
 
+    def connectInput(self, port : SignalPort):
+        self.ain.connect(port)
+        return self
 
     def update(self, t : TimeValue):
-        self.sig_out.value = self.convert(self.sig_in.value)
+        self.dout.value = self.convert(self.ain.value)
         #print(self.sig_out.value)
 
 

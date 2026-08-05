@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 
 from pyCAP.core.registry import SimRegistry
-from pyCAP.core.signals import Signal
+from pyCAP.core.signals import SignalPort
 
 @dataclass
 class TraceChannel:
@@ -30,16 +30,16 @@ class SimTracer:
         signals = self._registry.match(path)
 
         if signals is None:
-            print(f"Tracer Error - Could not find Obect at {path}")
+            print(f"Tracer Error - Could not find Object at {path}")
             return 
 
         if signals == {}:
-            print(f"Tracer Error - Could not find Obect at {path}")
+            print(f"Tracer Error - Could not find Object at {path}")
             return 
 
 
         for key, sig in signals.items():
-            if not isinstance(sig, Signal):
+            if not isinstance(sig, SignalPort):
                 continue
 
             if key in self.channels:

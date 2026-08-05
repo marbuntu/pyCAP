@@ -19,11 +19,20 @@ class UserDspBlock(BBox):
         self.kwargs = kwargs
 
 
-    def addPort(self, name : str):
-        
+    def add_input(self, name : str):
+        self._add_input(name)
+        return self
 
+
+    def add_output(self, name : str):
+        self._add_output(name)
+        return self
+    
+
+    def add_debug(self, name : str):
+        self._add_debug(name)
         return self
 
 
     def update(self, t : TimeValue):
-        self.sig_out.value = self.clbk(t, self.sig_in, *self.args, **self.kwargs)
+        self.clbk(self, t, *self.args, **self.kwargs)
