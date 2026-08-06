@@ -10,7 +10,11 @@ class BehavioralModel(ABC):
 
 
     @abstractmethod
-    def update(self):
+    def reset(self):
+        ...
+
+    @abstractmethod
+    def update(self, *args, **kwargs):
         ...
 
 

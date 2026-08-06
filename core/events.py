@@ -16,6 +16,8 @@ class SimEvent:
 
     period: Optional[TimeValue] = field(default=None, compare=False)
 
+    continuous: bool = field(default=False, compare=False)
+
     cancelled: bool = field(default=False, compare=False)
 
     def execute(self, scheduler):
@@ -24,6 +26,10 @@ class SimEvent:
             return
 
         self.callback(self.time, *self.args, **self.kwargs)
+
+        if self.continuous:
+            self.time += scheduler.dt
+            scheduler.schedule_event(self)
 
         if self.period is not None:
             self.time += self.period

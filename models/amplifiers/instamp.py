@@ -18,6 +18,11 @@ class InstAmpModel(BehavioralModel):
     def clip_signal(self, x : float):
         return np.clip(x, self.supply[0], self.supply[1])
 
+
+    def reset(self):
+        ...
+
+
     def update(self, t : TimeValue, inp : float, inn : float) -> float:
 
         # Clip Inputs to Supply

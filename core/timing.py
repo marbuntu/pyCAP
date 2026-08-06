@@ -12,6 +12,10 @@ class TimeValue:
         return TimeValue(self.ns - other.ns)
 
     @property
+    def isZero(self) -> bool:
+        return (self.ns == 0)
+
+    @property
     def seconds(self) -> float:
         """
             Get Value in Seconds
@@ -56,6 +60,11 @@ class TimeValue:
         """
         return cls(int(micros*1e3))
 
+
+    @classmethod
+    def Tzero(cls) -> object:
+        return cls(int(0))
+    
 
 
 def TSeconds(seconds : float) -> TimeValue:

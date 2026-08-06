@@ -50,6 +50,7 @@ class BBox(ABC):
         raise AttributeError(
             f"{type(self).__name__} has no attribute '{name}'"
         )
+    
 
     def _add_input(self, name: str) -> InputPort:
 
@@ -117,24 +118,10 @@ class BBox(ABC):
 
     #     }
 
-    def continuous(self, initial_delay : TimeValue = TimeValue.Tzero()):
-        """
-            Set Simulation Event Timing Continuous
-        """
-        self.events = [
-            SimEvent(
-                time=initial_delay,
-                callback=self.update,
-                period=TimeValue.Tzero(),
-                priority=0,
-                continuous=True
-            )
-        ]
+    def continuous(self, initial_delay : TimeValue = TimeValue.Tzero):
+        ...
 
-        return self
-
-
-    def every(self, period : TimeValue, initial_delay : TimeValue = TimeValue.Tzero()):
+    def every(self, period : TimeValue, initial_delay : TimeValue = TimeValue.Tzero):
         """
             Set Simulation Event Timing
         """
@@ -143,8 +130,7 @@ class BBox(ABC):
                 time=initial_delay,
                 callback=self.update,
                 period=period,
-                priority=0,
-                continuous=False
+                priority=0
             )
         ]
 

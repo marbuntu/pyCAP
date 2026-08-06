@@ -10,7 +10,7 @@ class SimScheduler:
         ## Simulation Event Scheduler
     """
 
-    def __init__(self, Tsim : TimeValue):
+    def __init__(self, Tsim : TimeValue, dTsim : TimeValue):
         """
             Create new Scheduler
 
@@ -22,6 +22,7 @@ class SimScheduler:
 
         self.time = TimeValue(0.0)
         self.until = Tsim
+        self.dt = dTsim
         self._queue = []
         self._counter = count()
 

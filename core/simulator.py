@@ -30,7 +30,7 @@ class Simulator:
         self._args = args
         self._kwargs = kwargs
 
-        self.scheduler = SimScheduler(Tsim)
+        self.scheduler = SimScheduler(Tsim, dTsim)
         self.registry = SimRegistry()
         self.tracer = SimTracer(self.registry)
 
@@ -63,6 +63,13 @@ class Simulator:
         self.registry.register(module)
 
         for evt in module.events:
+            # Event Period equal zero is not supported (but used for analog devices)
+            # Change it here to the smallest allowed time increment
+
+            if evt.period == 0:
+                print(evt, "is analog")
+                evt.period = self.dT
+
             self.scheduler.schedule_event(evt)
         
 
@@ -82,25 +89,3 @@ class Simulator:
     def get_context(self) -> SimContext:
         self.ctx
 
-
-# if __name__ == "__main__":
-
-#     def update(*arg, **kwargs):
-#         ...
-
-
-#     gen = SignalGenerator()
-#     adc = ADC(2.4, True, 8)
-#     adc.sig_in = gen.sig_out
-
-#     Tsim = TimeValue.fromSeconds(1.0)
-#     dTsim = TimeValue.fromSeconds(0.1)
-
-#     sig = Signal("raw", 0.0)
-
-#     sim = Simulator(Tsim, dTsim, update)
-#     sim.add_periodic(TimeValue.fromSeconds(0.0), TimeValue.fromSeconds(0.2), adc.update)
-#     sim.add_periodic(TimeValue.fromSeconds(0.01), TimeValue.fromSeconds(0.1), gen.update)
-
-#     # sim.schedule(10e-6, adc.convert, 2.0)
-#     sim.run()

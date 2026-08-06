@@ -9,16 +9,6 @@ class InstAmp(BBox):
         self._add_input("Ainp")
         self._add_input("Ainn")
         self._add_output("Aout")
-        self._model : BehavioralModel | None = None
-
-
-    def set_model(self, model : BehavioralModel) -> BehavioralModel:
-        if not isinstance(model, BehavioralModel):
-            raise TypeError(model)
-
-        self._model = model
-
-        return self
     
 
     def update(self, t : TimeValue):
