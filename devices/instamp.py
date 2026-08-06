@@ -1,6 +1,6 @@
 from pyCAP.core.bbox import BBox
 from pyCAP.core.timing import TimeValue
-
+from pyCAP.models.generic import BehavioralModel
 
 class InstAmp(BBox):
 
@@ -9,17 +9,23 @@ class InstAmp(BBox):
         self._add_input("Ainp")
         self._add_input("Ainn")
         self._add_output("Aout")
-        self.A = 1.0
+        self._model : BehavioralModel | None = None
 
 
-    def set_amplification(self, A : float):
-        self.A = A
+    def set_model(self, model : BehavioralModel) -> BehavioralModel:
+        if not isinstance(model, BehavioralModel):
+            raise TypeError(model)
+
+        self._model = model
+
         return self
     
 
-    def add_source(self, source : SignalSource):
-        ...
-
-
     def update(self, t : TimeValue):
-        self.out_Aout.value = self.A * (self.inp_Ainp.value - self.inp_Ainn.value)
+
+        self.out_Aout.value = self._model.update(
+            t, 
+            self.inp_Ainp.value, 
+            self.inp_Ainn.value
+        )
+

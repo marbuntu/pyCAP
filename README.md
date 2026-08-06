@@ -1,8 +1,11 @@
 # pyCAP
 
-**pyCAP** is an open-source Python framework for building and simulating modular signal-processing and mixed-signal systems.
+**pyCAP** is a lightweight, extensible, open-source framework for modeling and simulating mixed-signal systems, control loops, and signal processing chains.
 
 The project aims to provide a lightweight and extensible environment for rapidly prototyping signal chains composed of reusable functional blocks, such as signal generators, ADCs, DSP algorithms, and other processing elements. The framework is built around a clean block-and-port abstraction with an event-driven simulation engine and integrated signal tracing.
+
+## Pre
+* Python 12.0 or higher (need the new type-system)
 
 ## Features
 
