@@ -34,32 +34,30 @@ class InstAmpModel(BehavioralModel):
         return res
 
 
+    @classmethod    
+    def make_ideal(cls, gain : float) -> object:
+        """
+            Model Preset for Ideal InstAmp
 
+            ouput = (inp - inn) * A
+        """
 
+        mod = cls()
+        mod.gain = gain
+        mod.clip = False
 
-def IdealInstAmp(gain : float) -> InstAmpModel:
-    """
-        Constructor for Ideal InstAmp
+        return mod
 
-        ouput = (inp - inn) * A
-    """
+    @classmethod
+    def make_basic(cls, gain : float, supply : tuple) -> object:
+        """
+            Model Preset for a Basic InstAmp
 
-    mod = InstAmpModel()
-    mod.gain = gain
-    mod.clip = False
+            introduces In- and Output Clipping
+        """
+        mod = cls()
+        mod.gain = gain
+        mod.supply = supply
+        mod.clip = True
 
-    return mod
-
-
-def BasicInstAmp(gain : float, supply : tuple) -> InstAmpModel:
-    """
-        Constructor for a basic Inst Amp
-
-        introduces In- and Output Clipping
-    """
-    mod = InstAmpModel()
-    mod.gain = gain
-    mod.supply = supply
-    mod.clip = True
-
-    return mod
+        return mod

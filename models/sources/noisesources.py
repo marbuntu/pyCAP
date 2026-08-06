@@ -1,6 +1,6 @@
 import numpy as np
 
-from pyCAP.algo.signalsources import SignalSource
+from pyCAP.models.sources.genericsource import SignalSource
 from pyCAP.core.timing import TimeValue
 
 

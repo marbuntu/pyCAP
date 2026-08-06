@@ -6,7 +6,6 @@ class BehavioralModel(ABC):
 
     def __init__(self, name):
         self.name = f"{name}_behav"
-        print(self.name)
         self._params : dict[ModelParam] = {}
 
 

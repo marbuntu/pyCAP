@@ -1,7 +1,5 @@
 from pyCAP.core.bbox import BBox
-from pyCAP.core.signals import Signal
 from pyCAP.core.timing import TimeValue
-from pyCAP.algo.signalsources import SignalSource
 
 
 class UserDspBlock(BBox):
