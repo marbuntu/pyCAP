@@ -15,5 +15,4 @@ class SineSource(SignalSource):
 
 
     def value(self, t : TimeValue):
-
         return self.A * np.sin((2.0 * np.pi * self.f * t.seconds) + self.phase)

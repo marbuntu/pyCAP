@@ -27,8 +27,16 @@ class AnalogLowPass(BehavioralModel):
 
         # Get Time since last Update
         dt = t.seconds - self._lt.seconds
+
         tau = 1.0 / (2.0 * math.pi * self.fc)
         alpha = 1.0 - math.exp(-dt / tau)
+
+        # update state
+        self._lt = t
+
+        # update output
         self._y += alpha * (x - self._y)
+
+        #print(x, dt, tau, alpha, self._y)
 
         return self._y

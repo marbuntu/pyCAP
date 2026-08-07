@@ -28,8 +28,9 @@ class SimEvent:
         self.callback(self.time, *self.args, **self.kwargs)
 
         if self.continuous:
-            self.time += scheduler.dt
-            scheduler.schedule_event(self)
+            self.period = scheduler.dt
+            # self.time += scheduler.dt
+            # scheduler.schedule_event(self)
 
         if self.period is not None:
             self.time += self.period
