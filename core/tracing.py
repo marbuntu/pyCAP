@@ -7,6 +7,7 @@ from pyCAP.core.signals import SignalPort
 class TraceChannel:
 
     name: str
+    key: str
     signal: object
 
     ltime : list = field(default_factory=list)
@@ -26,7 +27,7 @@ class SimTracer:
         self._registry = registry
 
 
-    def add(self, path):
+    def add(self, path, alias : str = ""):
         signals = self._registry.match(path)
 
         if signals is None:
@@ -42,20 +43,25 @@ class SimTracer:
             if not isinstance(sig, SignalPort):
                 continue
 
-            if key in self.channels:
+            if not alias == "":
+                tname = alias
+            else:
+                tname = key
+
+            if tname in self.channels:
                 raise ValueError(
-                    f"Trace '{key}' already exists"
+                    f"Trace '{tname}' already exists"
                 )
 
-
-            self.channels[key] = TraceChannel(
+            self.channels[tname] = TraceChannel(
+                tname,
                 key,
                 sig
             )
 
-    def add_obj(self, obj : object, pattern : str = "*"):
+    def add_obj(self, obj : object, pattern : str = "*", alias : str = ""):
         pat = self._registry.name_of(obj)
-        self.add(f"{pat}{pattern}")
+        self.add(f"{pat}{pattern}", alias)
 
 
     def sample(self, t):

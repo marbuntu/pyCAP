@@ -1,7 +1,7 @@
 
 from pyCAP.core.bbox import BBox
 from pyCAP.core.timing import TimeValue
-from pyCAP.models.sources.genericsource import SignalSource
+from pyCAP.models.sources.base import SignalSource
 
 
 

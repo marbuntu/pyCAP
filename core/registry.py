@@ -41,7 +41,7 @@ class SimRegistry:
     def register(self, obj : object, name : str = None):
 
         name = self._register_obj(obj, name)
-        print("Registry Add: ", name)
+        # print("Registry Add: ", name)
 
         if hasattr(obj, "ports"):
             for ptype, ports in obj.ports().items():

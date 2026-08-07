@@ -1,12 +1,12 @@
 import numpy as np
 
-from pyCAP.models.sources.genericsource import SignalSource
+from pyCAP.models.sources.base import SignalSourceBase
 from pyCAP.core.timing import TimeValue
 
 
 
 
-class SineSource(SignalSource):
+class SineSource(SignalSourceBase):
 
     def __init__(self, amplitide : float, f_hz : float, phase_rad : float = 0.0):
         self.A = amplitide

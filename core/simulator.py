@@ -23,7 +23,6 @@ class Simulator:
         ## Simulation Handler
     """
 
-
     def __init__(self, Tsim : TimeValue, dTsim : TimeValue,*args, **kwargs):
         self.Tsim = Tsim
         self.dT = dTsim
